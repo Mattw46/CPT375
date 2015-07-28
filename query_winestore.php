@@ -29,7 +29,7 @@
         ?>
         </select>
         <select value="query" name="query">
-        	<option value="select">SELECT</option>
+        	<option value="SELECT">SELECT</option>
         	<option value="SHOW">SHOW</option>
         </select>
 		<input type="submit" name="submit" value="Run Query">
@@ -42,53 +42,26 @@
       // Check connection
 		if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
-        }
+      }
         
-        if (isset($_GET["query"])) {
+      if (isset($_GET["query"])) {
         	if ($_GET["query"] == "SELECT") {
-        		$sql = "SELECT * FROM ".$_GET["tableName"].";";
+				echo "select * from: ".$_GET["tableName"]."<br />";
+        		$sql = "SELECT * FROM ".$_GET["tableName"];
         		$result = $conn->query($sql);
-        		if ($_GET["tableName"] == 'countries') {
-					
-				}  
-        		if ($_GET["tableName"] == 'customer') {
-					
-				}  
-        		if ($_GET["tableName"] == 'grape_variety') {
-					
-				}  
-        		if ($_GET["tableName"] == 'inventory') {
-					
-				}  
-        		if ($_GET["tableName"] == 'items') {
-					
-				}  
-        		if ($_GET["tableName"] == 'orders') {
-					
-				}  
-        		if (region) {
-					
-				}  
-        		if (titles) {
-					
-				}  
-        		if (users) {
-					
-				}  
-        		if (wine) {
-					
-				}  
-        		if (wine_type  ) {
-					
-				}  
-        		if (wine_variety) {
-					
-				}  
-        		if (winery) {
-					
-				}  
+        		if ($result->num_rows > 0) {
+					//while ($row = $result->fetch_assoc()) {
+		
+					//}
+					while ($row = $result->fetch_assoc()) {
+						foreach($row as $key => $value) {
+							print "|&nbsp$key&nbsp&nbsp|&nbsp $value &nbsp&nbsp|<br />";
+						}
+					}
+				}
         	}
         	else {
+				echo "Show Columns from: ".$_GET["tableName"]."<br />";
         		$sql = "SHOW columns FROM ".$_GET["tableName"].";";
         		$result = $conn->query($sql);
         		require_once 'week3.php';
